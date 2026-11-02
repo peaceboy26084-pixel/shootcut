@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shoot and Cut | Premium Video Production & Social Media Agency</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              black: '#070709',
+              dark: '#0e0e12',
+              card: '#131318',
+              border: '#272730',
+              red: '#dc2626',
+              lightRed: '#ef4444',
+              crimsonGlow: '#991b1b',
+            }
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Textured Dark Background */
+    body {
+      background-color: #070709;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(220, 38, 38, 0.12) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(185, 28, 28, 0.08) 0%, transparent 45%),
+        repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.015) 0px, rgba(255, 255, 255, 0.015) 1px, transparent 1px, transparent 24px);
+      color: #f4f4f5;
+    }
+
+    /* Glow Effects */
+    .glow-red-box {
+      box-shadow: 0 0 25px -5px rgba(220, 38, 38, 0.35);
+    }
+    .glow-red-hover:hover {
+      box-shadow: 0 0 35px -2px rgba(220, 38, 38, 0.45);
+      border-color: #ef4444;
+    }
+    .text-glow {
+      text-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+    }
+    
+    /* Subtle Film Grain Overlay */
+    .noise-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      opacity: 0.025;
+      pointer-events: none;
+      background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)"/></svg>');
+      z-index: 999;
+    }
+  </style>
+</head>
+<body class="overflow-x-hidden antialiased selection:bg-brand-red selection:text-white">
+  <div class="noise-overlay"></div>
+
+  <!-- Navigation Bar -->
+  <header class="fixed top-0 left-0 w-full z-50 bg-brand-black/80 backdrop-blur-md border-b border-brand-border/60 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 h-20 flex items-center justify-between">
+      <!-- Brand Logo -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-brand-red to-brand-lightRed flex items-center justify-center text-white text-lg font-bold shadow-lg shadow-brand-red/30 transition-transform duration-300 group-hover:scale-105">
+          <i class="fa-solid fa-clapperboard"></i>
+        </div>
+        <div>
+          <span class="font-display font-bold text-xl tracking-wider text-white flex items-center gap-1">
+            SHOOT <span class="text-brand-lightRed">&amp;</span> CUT
+          </span>
+          <span class="text-[10px] tracking-widest text-zinc-400 uppercase block font-semibold">Visual Studio</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Menu -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-300">
+        <a href="#services" class="hover:text-brand-lightRed transition-colors">Services</a>
+        <a href="#portfolio" class="hover:text-brand-lightRed transition-colors">Hospitality</a>
+        <a href="#music" class="hover:text-brand-lightRed transition-colors">Live Concerts</a>
+        <a href="#packages" class="hover:text-brand-lightRed transition-colors">Retainers</a>
+        <a href="#about" class="hover:text-brand-lightRed transition-colors">About Us</a>
+      </nav>
+
+      <!-- Header Action -->
+      <div class="hidden sm:flex items-center gap-3">
+        <a href="#contact" class="px-5 py-2.5 rounded-full bg-brand-red hover:bg-brand-lightRed text-white text-sm font-semibold tracking-wide transition-all duration-300 shadow-md shadow-brand-red/25 hover:shadow-brand-red/50 hover:-translate-y-0.5 flex items-center gap-2">
+          <span>Let's Talk</span>
+          <i class="fa-solid fa-arrow-right text-xs"></i>
+        </a>
+      </div>
+
+      <!-- Mobile Hamburger Button -->
+      <button id="mobileMenuBtn" class="md:hidden text-zinc-300 hover:text-white p-2 text-2xl focus:outline-none" aria-label="Toggle Menu">
+        <i class="fa-solid fa-bars-staggered"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobileMenu" class="hidden md:hidden bg-brand-dark/95 border-b border-brand-border/80 px-6 py-6 transition-all duration-300 space-y-4">
+      <a href="#services" class="mobile-link block text-zinc-300 hover:text-brand-lightRed py-2 text-base font-medium">Services</a>
+      <a href="#portfolio" class="mobile-link block text-zinc-300 hover:text-brand-lightRed py-2 text-base font-medium">Hospitality Clients</a>
+      <a href="#music" class="mobile-link block text-zinc-300 hover:text-brand-lightRed py-2 text-base font-medium">Live Concerts</a>
+      <a href="#packages" class="mobile-link block text-zinc-300 hover:text-brand-lightRed py-2 text-base font-medium">Retainer Packages</a>
+      <a href="#about" class="mobile-link block text-zinc-300 hover:text-brand-lightRed py-2 text-base font-medium">About Us</a>
+      <a href="#contact" class="mobile-link block w-full text-center py-3 bg-brand-red text-white font-semibold rounded-lg shadow-md">Get in Touch</a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative pt-36 pb-20 md:pt-48 md:pb-32 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- Left Content -->
+        <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-brand-red/40 bg-brand-red/10 text-brand-lightRed text-xs font-semibold uppercase tracking-wider">
+            <span class="w-2 h-2 rounded-full bg-brand-lightRed animate-ping"></span>
+            Accepting New Monthly Brand Retainers
+          </div>
+
+          <h1 class="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl text-white leading-[1.12]">
+            WE CREATE CONTENT THAT MAKES PEOPLE <span class="text-brand-lightRed text-glow">STOP SCROLLING.</span>
+          </h1>
+
+          <p class="font-display text-lg sm:text-xl text-zinc-300 font-semibold tracking-wide">
+            VIDEO PRODUCTION <span class="text-brand-red">|</span> REEL EDITING <span class="text-brand-red">|</span> SOCIAL MEDIA MANAGEMENT
+          </p>
+
+          <p class="text-zinc-400 text-base sm:text-lg max-w-xl mx-auto lg:mx-0 leading-relaxed">
+            Elevating cafes, restaurants, luxury hotels, musicians, and lifestyle brands with cinematic, retention-focused 9:16 Instagram Reels that spark conversations and convert followers into customers.
+          </p>
+
+          <div class="pt-4 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+            <a href="#portfolio" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-brand-red hover:bg-brand-lightRed text-white font-bold transition-all duration-300 shadow-lg shadow-brand-red/30 hover:shadow-brand-red/50 hover:-translate-y-0.5 text-center flex items-center justify-center gap-3">
+              <span>View Client Work</span>
+              <i class="fa-solid fa-play text-xs"></i>
+            </a>
+            <a href="#contact" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-brand-card hover:bg-zinc-800 text-zinc-200 border border-brand-border font-semibold transition-all duration-300 text-center flex items-center justify-center gap-2">
+              <span>Get Shoot Quote</span>
+              <i class="fa-solid fa-bolt text-brand-lightRed text-sm"></i>
+            </a>
+          </div>
+
+          <!-- Quick Metrics -->
+          <div class="pt-8 grid grid-cols-3 gap-4 border-t border-brand-border/70 max-w-lg mx-auto lg:mx-0 text-left">
+            <div>
+              <p class="font-display text-2xl sm:text-3xl font-bold text-white">4K 60</p>
+              <p class="text-xs text-zinc-400 font-medium">Cinema Quality</p>
+            </div>
+            <div>
+              <p class="font-display text-2xl sm:text-3xl font-bold text-brand-lightRed">9:16</p>
+              <p class="text-xs text-zinc-400 font-medium">Reel Optimized</p>
+            </div>
+            <div>
+              <p class="font-display text-2xl sm:text-3xl font-bold text-white">100%</p>
+              <p class="text-xs text-zinc-400 font-medium">Custom Audio &amp; Grade</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Hero Media Showcase -->
+        <div class="lg:col-span-5 relative">
+          <div class="relative mx-auto max-w-md lg:max-w-none">
+            <!-- Red Ambient Glow in Background -->
+            <div class="absolute -inset-1.5 bg-gradient-to-r from-brand-red to-orange-600 rounded-2xl blur-xl opacity-30 animate-pulse"></div>
+            
+            <div class="relative rounded-2xl overflow-hidden border border-brand-border bg-brand-card shadow-2xl">
+              <img src="https://www.adorama.com/alc/wp-content/uploads/2024/07/IMG_0557-825x465.jpg" alt="Shoot and Cut Cinema Rig Setup" class="w-full h-80 sm:h-96 object-cover filter brightness-95">
+              
+              <!-- Overlay Floating Badge -->
+              <div class="absolute bottom-4 left-4 right-4 bg-brand-black/90 backdrop-blur-md border border-brand-border/80 rounded-xl p-4 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-full bg-brand-red/20 text-brand-lightRed flex items-center justify-center font-bold text-lg">
+                    <i class="fa-solid fa-video"></i>
+                  </div>
+                  <div>
+                    <h4 class="text-white font-display font-bold text-sm">Shoot &amp; Cut Studio</h4>
+                    <p class="text-xs text-zinc-400">Direction &bull; Cinematography &bull; Color</p>
+                  </div>
+                </div>
+                <span class="px-2.5 py-1 rounded-full bg-green-950/80 text-green-400 border border-green-800 text-[11px] font-semibold flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-ping"></span> Live
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section (Duo Creative Producers) -->
+  <section id="about" class="py-20 bg-brand-dark/50 border-t border-brand-border/70 relative">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- Two Teammates Silhouette / Character Graphic -->
+        <div class="lg:col-span-5">
+          <div class="bg-brand-card border border-brand-border rounded-2xl p-8 relative overflow-hidden flex flex-col items-center justify-center text-center glow-red-box">
+            <div class="absolute -top-16 -left-16 w-44 h-44 bg-brand-red/20 rounded-full blur-3xl pointer-events-none"></div>
+
+            <svg class="w-56 h-48 mx-auto" viewBox="0 0 220 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="110" cy="90" r="75" fill="#dc2626" fill-opacity="0.14"></circle>
+              <!-- Teammate 1: Cinematographer with Camera Gimbal -->
+              <g>
+                <circle cx="78" cy="52" r="18" fill="#000000" stroke="#ef4444" stroke-width="2.5"></circle>
+                <path d="M64 45 Q56 42 60 38 Q74 38 88 45 Z" fill="#dc2626"></path>
+                <path d="M46 160 L48 100 Q50 78 78 78 Q100 78 106 100 L110 160 Z" fill="#000000" stroke="#272730" stroke-width="2"></path>
+                <path d="M96 92 L124 105 L118 122 L94 110 Z" fill="#000000"></path>
+                <rect x="118" y="90" width="22" height="16" rx="3" fill="#18181b" stroke="#ef4444" stroke-width="2"></rect>
+                <circle cx="138" cy="98" r="5" fill="#dc2626"></circle>
+                <rect x="127" y="106" width="5" height="24" rx="2" fill="#ef4444"></rect>
+              </g>
+              <!-- Teammate 2: Creative Director with Monitor -->
+              <g>
+                <circle cx="146" cy="56" r="17" fill="#000000" stroke="#f4f4f5" stroke-width="2"></circle>
+                <path d="M132 54 C132 38 160 38 160 54" stroke="#dc2626" stroke-width="3" fill="none"></path>
+                <rect x="130" y="50" width="5" height="12" rx="2" fill="#ef4444"></rect>
+                <rect x="157" y="50" width="5" height="12" rx="2" fill="#ef4444"></rect>
+                <path d="M116 160 L120 106 Q122 84 146 84 Q170 84 176 106 L180 160 Z" fill="#000000" stroke="#272730" stroke-width="2"></path>
+                <rect x="136" y="112" width="28" height="20" rx="3" fill="#18181b" stroke="#ffffff" stroke-width="1.8"></rect>
+                <line x1="141" y1="118" x2="159" y2="118" stroke="#ef4444" stroke-width="2"></line>
+                <line x1="141" y1="124" x2="153" y2="124" stroke="#a1a1aa" stroke-width="1.5"></line>
+              </g>
+              <ellipse cx="112" cy="164" rx="72" ry="7" fill="#000000"></ellipse>
+            </svg>
+
+            <h3 class="font-display font-bold text-xl text-white mt-4">Joy &amp; Goutam</h3>
+            <p class="text-brand-lightRed font-semibold text-xs tracking-wider uppercase mt-1">Creative Director &bull; Lead Cinematographer</p>
+            <p class="text-zinc-400 text-xs mt-3 leading-relaxed max-w-xs">
+              Every shoot is directed with vision, stabilized 4K precision, and edited for maximum viewer retention.
+            </p>
+          </div>
+        </div>
+
+        <!-- About Text & Highlights -->
+        <div class="lg:col-span-7 space-y-6">
+          <div class="inline-flex items-center gap-2 text-brand-lightRed text-xs font-bold tracking-widest uppercase">
+            <span class="w-6 h-[2px] bg-brand-lightRed"></span> Who We Are
+          </div>
+          
+          <h2 class="font-display font-bold text-3xl sm:text-4xl text-white">
+            We Help Brands Turn Passersby into Loyal Customers
+          </h2>
+          
+          <p class="text-zinc-300 text-base leading-relaxed">
+            <strong class="text-white">Shoot and Cut</strong> is a specialized boutique video production studio and social management partner based in India. We specialize in producing visually addictive, high-engagement Instagram Reels for businesses that rely on atmosphere and experience—from bustling specialty cafes and fine-dining restaurants to heritage hotels and high-octane live music bands.
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+            <div class="p-3.5 bg-brand-card/90 rounded-xl border border-brand-border flex items-center gap-3">
+              <i class="fa-solid fa-check text-brand-lightRed"></i>
+              <span class="text-sm text-zinc-200 font-medium">Rapid 48-Hour Turnarounds</span>
+            </div>
+            <div class="p-3.5 bg-brand-card/90 rounded-xl border border-brand-border flex items-center gap-3">
+              <i class="fa-solid fa-check text-brand-lightRed"></i>
+              <span class="text-sm text-zinc-200 font-medium">ASMR &amp; Crisp Diegetic Audio</span>
+            </div>
+            <div class="p-3.5 bg-brand-card/90 rounded-xl border border-brand-border flex items-center gap-3">
+              <i class="fa-solid fa-check text-brand-lightRed"></i>
+              <span class="text-sm text-zinc-200 font-medium">Algorithm-Tested Hook Architecture</span>
+            </div>
+            <div class="p-3.5 bg-brand-card/90 rounded-xl border border-brand-border flex items-center gap-3">
+              <i class="fa-solid fa-check text-brand-lightRed"></i>
+              <span class="text-sm text-zinc-200 font-medium">Cross-Industry Adaptability</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services" class="py-24 border-t border-brand-border/70 relative">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8">
+      
+      <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+        <span class="text-xs uppercase font-bold tracking-widest text-brand-lightRed">Our Capabilities</span>
+        <h2 class="font-display font-bold text-3xl sm:text-4xl text-white">End-to-End Content Engine</h2>
+        <p class="text-zinc-400 text-sm sm:text-base">From storyboard concept to scheduled publish, we handle every stage of your short-form video presence.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <!-- Card 1 -->
+        <div class="bg-brand-card border border-brand-border p-7 rounded-2xl flex flex-col justify-between transition-all duration-300 glow-red-hover group">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-brand-red/10 border border-brand-red/30 text-brand-lightRed flex items-center justify-center text-xl mb-6 group-hover:scale-110 transition-transform">
+              <i class="fa-solid fa-clapperboard"></i>
+            </div>
+            <h3 class="font-display font-bold text-lg text-white mb-2">Reel Production</h3>
+            <p class="text-zinc-400 text-sm leading-relaxed mb-4">
+              Pre-shoot planning, high-retention hook design, cinematic camera movements, and on-site gimbal cinematography.
+            </p>
+          </div>
+          <ul class="text-xs text-zinc-300 space-y-2 border-t border-brand-border/60 pt-4">
+            <li class="flex items-center gap-2"><i class="fa-solid fa-angle-right text-brand-red"></i> 9:16 Vertical Video</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-angle-right text-brand-red"></i> Creative Direction</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-angle-right text-brand-red"></i> On-location Lighting</li>
+          </ul>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="bg-brand-card border border-brand-border p-7 rounded-2xl flex flex-col justify-between transition-all duration-300 glow-red-hover group">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-brand-red/10 border border-brand-red/30 text-brand-lightRed flex items-center justify-center text-xl mb-6 group-hover:scale-110 transition-transform">
+              <i class="fa-solid fa-wand-magic-sparkles"></i>
+            </div>
+            <h3 class="font-display font-bold text-lg text-white mb-2">Video Editing &amp; Grade</h3>
+            <p class="text-zinc-400 text-sm leading-relaxed mb-4">
+              Seamless match-cuts, rhythm-based speed ramps, audio Foley design, and signature editorial colour grades.
+            </p>
+          </div>
+          <ul class="text-xs text-zinc-300 space-y-2 border-t border-brand-border/60 pt-4">
+            <li class="flex items-center gap-2"><i class="fa-solid fa-angle-right text-brand-red"></i> Trending Audio Sync</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-angle-right text-brand-red"></i> Hollywood Color Tone</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-angle-right text-brand-red"></i> Dynamic Typography</li>
+          </ul>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="bg-brand-card border border-brand-border p-7 rounded-2xl flex flex-col justify-between transition-all duration-300 glow-red-hover group">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-brand-red/10 border border-brand-red/30 text-brand-lightRed flex items-center justify-center text-xl mb-6 group-hover:scale-110 transition-transform">
+              <i class="fa-solid fa-utensils"></i>
+            </div>
+            <h3 class="font-display font-bold text-lg text-white mb-2">Food &amp; Hospitality</h3>
+            <p class="text-zinc-400 text-sm leading-relaxed mb-4">
+              Sensory macro food videography, beverage pours, interior architectural walkthroughs, and hotel vibe tours.
+            </p>
+          </div>
+          <ul class="text-xs text-zinc-300 space-y-2 border-t border-brand-border/60 pt-4">
+            <li class="flex items-center gap-2"><i class="fa-solid fa-angle-right text-brand-red"></i> ASMR Sizzles &amp; Steam</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-angle-right text-brand-red"></i> Ambient Interiors</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-angle-right text-brand-red"></i> Menu Launch Campaigns</li>
+          </ul>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="bg-brand-card border border-brand-border p-7 rounded-2xl flex flex-col justify-between transition-all duration-300 glow-red-hover group">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-brand-red/10 border border-brand-red/30 text-brand-lightRed flex items-center justify-center text-xl mb-6 group-hover:scale-110 transition-transform">
+              <i class="fa-solid fa-chart-line"></i>
+            </div>
+            <h3 class="font-display font-bold text-lg text-white mb-2">Social Management</h3>
+            <p class="text-zinc-400 text-sm leading-relaxed mb-4">
+              End-to-end content calendar design, caption copywriting, story sequences, posting schedule, and grid aesthetics.
+            </p>
+          </div>
+          <ul class="text-xs text-zinc-300 space-y-2 border-t border-brand-border/60 pt-4">
+            <li class="flex items-center gap-2"><i class="fa-solid fa-angle-right text-brand-red"></i> Content Scheduling</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-angle-right text-brand-red"></i> Bio &amp; Highlights Setup</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-angle-right text-brand-red"></i> Growth Strategy</li>
+          </ul>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Hospitality Portfolio Section (Live Instagram Links) -->
+  <section id="portfolio" class="py-24 bg-brand-dark/40 border-t border-brand-border/70 relative">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
+        <div>
+          <span class="text-xs uppercase font-bold tracking-widest text-brand-lightRed">Client Case Studies</span>
+          <h2 class="font-display font-bold text-3xl sm:text-4xl text-white mt-1">Cafes, Hotels &amp; Dining</h2>
+        </div>
+        <p class="text-zinc-400 text-sm max-w-md">
+          Explore actual production client profiles. Every card links directly to the published Instagram reels and accounts.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        <!-- Client 1: The Aava Cafe -->
+        <div class="bg-brand-card border border-brand-border rounded-2xl overflow-hidden flex flex-col justify-between transition-all duration-300 glow-red-hover group">
+          <div>
+            <div class="relative h-48 bg-zinc-900 overflow-hidden">
+              <img src="https://lh3.googleusercontent.com/gg/AJWXcNdyipc1lqxuu_2oSvNLliTi37oFAZnoyKbHIJVeKwqIIlt3N1Eh_jbUumnD_SaL5YR6gP6NO1Dfm0F4eAJ_o5AbHisx0ah3YIUSdqWuV_bsAy3dY7ae_i-l8-pvIerxDJz2TDq59hztjGlPT45yGvtTx_vne4FbmTJ1PB39HJM059uxzYqKfm-dZMQSBes4JsWQSKj0IE3ByVeshhkLutucYTQHEMe4GoWmL4pfMD7mPQOJhDzRTGYScWZp2oOFf3rG1Z3fprz4_pcz41fVyEbHDauJasR0d1A=s0" alt="The Aava Cafe" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+              <div class="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-brand-black/80 backdrop-blur-sm border border-brand-border text-[11px] font-bold text-brand-lightRed">
+                CAFE &amp; COFFEE
+              </div>
+            </div>
+            
+            <div class="p-6">
+              <h3 class="font-display font-bold text-xl text-white group-hover:text-brand-lightRed transition-colors">The Aava Cafe</h3>
+              <p class="text-xs text-brand-lightRed font-semibold mt-0.5">@the_aava_official</p>
+              <p class="text-zinc-400 text-sm mt-3 leading-relaxed">
+                Aesthetic ambient reels, espresso pulls, bakery visual storytelling, and cozy corner walk-ins.
+              </p>
+            </div>
+          </div>
+
+          <div class="p-6 pt-0">
+            <a href="https://www.instagram.com/the_aava_official?xtok=MTUycHgyZmRqNWxrbg==" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 px-4 rounded-xl bg-brand-red/15 hover:bg-brand-red text-brand-lightRed hover:text-white border border-brand-red/30 font-semibold text-xs transition-all duration-300 flex items-center justify-center gap-2">
+              <i class="fa-brands fa-instagram text-sm"></i>
+              <span>Watch on Instagram</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Client 2: Hotel Omkar Palace -->
+        <div class="bg-brand-card border border-brand-border rounded-2xl overflow-hidden flex flex-col justify-between transition-all duration-300 glow-red-hover group">
+          <div>
+            <div class="relative h-48 bg-zinc-900 overflow-hidden">
+              <img src="https://lh3.googleusercontent.com/gg/AJWXcNeLz7MMkOSON1FPEhnOBg_BKpwweIsK5BLoTAVTXAkITk1f5TKa_G62gI0lEgMAFJcCAQxqbjhVcDbkSU71xL6JqFy817EiPx3J5aB2BVbx_iRzPUW2zWCvYK-0FQTZCUX2fRSsJQ6OPDI5fluc4QYUJO5ELv-JKJV9KqkmH3qkgznWa1TdDX8kntDxk7zU5Rh1ekwQMZUxMWNHQetL5xWjzjkKkMIkm4NqLqvRa7jLrEqUWOhVISZ9xxHaJ8NvaenXIF5wwes8lFpuvaNxwnhJYuGHYHjK58o=s0" alt="Hotel Omkar Palace" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+              <div class="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-brand-black/80 backdrop-blur-sm border border-brand-border text-[11px] font-bold text-brand-lightRed">
+                LUXURY STAY
+              </div>
+            </div>
+            
+            <div class="p-6">
+              <h3 class="font-display font-bold text-xl text-white group-hover:text-brand-lightRed transition-colors">Hotel Omkar Palace</h3>
+              <p class="text-xs text-brand-lightRed font-semibold mt-0.5">@hotel_omkar_palace</p>
+              <p class="text-zinc-400 text-sm mt-3 leading-relaxed">
+                Hospitality tours, exterior facade sweeps, executive room tours, and restaurant dining highlights.
+              </p>
+            </div>
+          </div>
+
+          <div class="p-6 pt-0">
+            <a href="https://www.instagram.com/hotel_omkar_palace?exln=MTF2bnY3cTRpODM=" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 px-4 rounded-xl bg-brand-red/15 hover:bg-brand-red text-brand-lightRed hover:text-white border border-brand-red/30 font-semibold text-xs transition-all duration-300 flex items-center justify-center gap-2">
+              <i class="fa-brands fa-instagram text-sm"></i>
+              <span>Watch on Instagram</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Client 3: Radhe Krishna Resort -->
+        <div class="bg-brand-card border border-brand-border rounded-2xl overflow-hidden flex flex-col justify-between transition-all duration-300 glow-red-hover group">
+          <div>
+            <div class="relative h-48 bg-zinc-900 overflow-hidden">
+              <img src="https://lh3.googleusercontent.com/gg/AJWXcNeKcdtbVBq0KX_ny13iP1hNLtAyWhdtVYyGNgPLaheDlWrffugKbHnF9pEV0CXuQ7LI4H2eeO7F9PeK6o7Jal_Iwvw6OngI7gxDhr0kVILfb7-Orla3HE0ruG9d2cm0_UiRWwU2BTD9J6U4GCFODXzvDRzGdaZypDGifjT2Do9_VFDLLhySwG-SWJbIY1O1FRFpRJRNKhPKleXA2Kc57VI4v2_QavAhPeLP2kWl6ro10fhuW8Tu7u2hnxgcOIf-spkSeMymJE-dgv4SOM_dECq0q7jKe7160eM=s0" alt="Radhe Krishna Resort" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+              <div class="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-brand-black/80 backdrop-blur-sm border border-brand-border text-[11px] font-bold text-brand-lightRed">
+                RESORT &amp; WEDDING
+              </div>
+            </div>
+            
+            <div class="p-6">
+              <h3 class="font-display font-bold text-xl text-white group-hover:text-brand-lightRed transition-colors">Radhe Krishna Resort</h3>
+              <p class="text-xs text-brand-lightRed font-semibold mt-0.5">@radhe_krishna_resort_</p>
+              <p class="text-zinc-400 text-sm mt-3 leading-relaxed">
+                Grand lawn celebrations, evening illuminated architecture, and destination wedding promo reels.
+              </p>
+            </div>
+          </div>
+
+          <div class="p-6 pt-0">
+            <a href="https://www.instagram.com/radhe_krishna_resort_?obrf=bmtwdjBsZ2U5dTJ6" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 px-4 rounded-xl bg-brand-red/15 hover:bg-brand-red text-brand-lightRed hover:text-white border border-brand-red/30 font-semibold text-xs transition-all duration-300 flex items-center justify-center gap-2">
+              <i class="fa-brands fa-instagram text-sm"></i>
+              <span>Watch on Instagram</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Client 4: Sada Shiv Dhaba -->
+        <div class="bg-brand-card border border-brand-border rounded-2xl overflow-hidden flex flex-col justify-between transition-all duration-300 glow-red-hover group">
+          <div>
+            <div class="relative h-48 bg-zinc-900 overflow-hidden">
+              <img src="https://lh3.googleusercontent.com/gg/AJWXcNdnBysN0FeYo5CehvnFVZ5TDS6TkdQ87dEGd8SST3JogC18RDGJDkvSYdpFL4OaLtxkRw67ck8cZobRDQw6jy34LhUIxh-j2tHLiedD3R0hagGIK0C0Um-tLKnutTi1PALUB1fBOWdJ1uX-Lxf5a5s2OjszH1k-ESphx-lDgdyuJDEns-Q2osE6A7U3GlrtchdJCXGmMkkVy-VNn5clD69qeuvBZULPF5you8lz-62fFGSRtzep4-bOB40X1oFzhhq_um0KMj1t05Al5JWnMSv1O5Hffq1Wsww=s0" alt="Sada Shiv Dhaba" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+              <div class="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-brand-black/80 backdrop-blur-sm border border-brand-border text-[11px] font-bold text-brand-lightRed">
+                RESTAURANT
+              </div>
+            </div>
+            
+            <div class="p-6">
+              <h3 class="font-display font-bold text-xl text-white group-hover:text-brand-lightRed transition-colors">Sada Shiv Dhaba</h3>
+              <p class="text-xs text-brand-lightRed font-semibold mt-0.5">@sada_shiv_dhaba_ujjain</p>
+              <p class="text-zinc-400 text-sm mt-3 leading-relaxed">
+                Tandoor sizzles, signature curries, fast-paced food assembly, and family dining atmospheres.
+              </p>
+            </div>
+          </div>
+
+          <div class="p-6 pt-0">
+            <a href="https://www.instagram.com/sada_shiv_dhaba_ujjain?exln=cjhoN3M3NnNpaXA0" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 px-4 rounded-xl bg-brand-red/15 hover:bg-brand-red text-brand-lightRed hover:text-white border border-brand-red/30 font-semibold text-xs transition-all duration-300 flex items-center justify-center gap-2">
+              <i class="fa-brands fa-instagram text-sm"></i>
+              <span>Watch on Instagram</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Music & Live Performance Clients -->
+  <section id="music" class="py-24 border-t border-brand-border/70 relative">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8">
+      
+      <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+        <span class="text-xs uppercase font-bold tracking-widest text-brand-lightRed">High-Voltage Stage Action</span>
+        <h2 class="font-display font-bold text-3xl sm:text-4xl text-white">Music &amp; Live Performances</h2>
+        <p class="text-zinc-400 text-sm sm:text-base">Capturing live gigs, audience flashlights, artist energy, and beat-synchronized festival edits.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        
+        <!-- Band 1: Vasudev Musicals (Packed crowd photo) -->
+        <div class="bg-brand-card border border-brand-border rounded-2xl overflow-hidden flex flex-col justify-between glow-red-hover transition-all duration-300 group">
+          <div>
+            <div class="relative h-64 sm:h-72 bg-zinc-900 overflow-hidden">
+              <img src="https://lh3.googleusercontent.com/gg/AJWXcNcsE3qpgwLEXj-IaOReq7lEFWgUwnlA4FUN7Cc58frimZNtm43gQdaEijQFdIajlzxmJT_nBtmPNnM8koBRvIgtV4P95DaQAJ8x3ugmmgorc7EnmyVY96Zx23_Yesp01TAOjv4-Aji7aJmLChF4ABFJblYYGNzr3K_kgFRoi_kP5_Occ9n1bc4Js-QMLLO_Ax7Ic_crDDwUCXARLrvI7zaFyGEk3Xm5mx9ud22swxaGcuo8FDwRGuqD2kj_HZiehy9LWGdCg-xvd_Qayh3gC9ddkskejmArKA=s0" alt="Vasudev Musicals Live Crowd" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+              <div class="absolute inset-0 bg-gradient-to-t from-brand-card via-transparent to-transparent"></div>
+              <div class="absolute top-4 left-4 px-3 py-1 rounded-full bg-brand-red text-white text-xs font-bold tracking-wider uppercase">
+                Live Show Group
+              </div>
+            </div>
+
+            <div class="p-7">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 class="font-display font-bold text-2xl text-white">Vasudev Musicals</h3>
+                  <p class="text-brand-lightRed text-sm font-semibold">@vasudev_musicals</p>
+                </div>
+              </div>
+              <p class="text-zinc-300 text-sm mt-4 leading-relaxed">
+                Cinematic multi-camera stage coverage, capturing thousands of synchronized flashlight waves, powerful vocal solos, and electric crowd interaction across major venues.
+              </p>
+              <div class="flex flex-wrap gap-2 mt-4">
+                <span class="text-[11px] px-2.5 py-1 rounded-md bg-zinc-800 text-zinc-300 border border-brand-border">Crowd Synced Reels</span>
+                <span class="text-[11px] px-2.5 py-1 rounded-md bg-zinc-800 text-zinc-300 border border-brand-border">Live Stage Audio</span>
+                <span class="text-[11px] px-2.5 py-1 rounded-md bg-zinc-800 text-zinc-300 border border-brand-border">Artist Spotlight</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-7 pt-0">
+            <a href="https://www.instagram.com/vasudev_musicals?vrfl=MTlocmVpenFvaGxzag==" target="_blank" rel="noopener noreferrer" class="w-full py-3 px-5 rounded-xl bg-brand-red hover:bg-brand-lightRed text-white font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 shadow-md shadow-brand-red/30">
+              <i class="fa-brands fa-instagram text-base"></i>
+              <span>View Vasudev Musicals on Instagram</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Band 2: Aavartan The Band (Group portrait) -->
+        <div class="bg-brand-card border border-brand-border rounded-2xl overflow-hidden flex flex-col justify-between glow-red-hover transition-all duration-300 group">
+          <div>
+            <div class="relative h-64 sm:h-72 bg-zinc-900 overflow-hidden">
+              <img src="https://lh3.googleusercontent.com/gg/AJWXcNftHExqEZPl6SqlKKqy0xxoyzosDhB7WwPM7UVfiOBNNRpRM878cddO1J8yND_r3injSpVWufGk_FHxrIrfN2topYTkf13AxgXCnV3UDSxDe0hDf5w1x6T0wFmjiHWeDL_ohyzFKAC8MXp38B9r1wqmUy17Lf_otxODNZpOWzwtRlGOYqtM3wAn3_GIkhm2HWkiOXbIej_5n2G4trwxDM0Whx9ZTLmk01xyWDmiQwlA62pmxWfpO3obHWDLNiSdAKnXo_6j3ZngHAdJb-bl4QjoQ8c9lvmW9g=s0" alt="Aavartan The Band" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+              <div class="absolute inset-0 bg-gradient-to-t from-brand-card via-transparent to-transparent"></div>
+              <div class="absolute top-4 left-4 px-3 py-1 rounded-full bg-brand-red text-white text-xs font-bold tracking-wider uppercase">
+                Live Band
+              </div>
+            </div>
+
+            <div class="p-7">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 class="font-display font-bold text-2xl text-white">Aavartan The Band</h3>
+                  <p class="text-brand-lightRed text-sm font-semibold">@aavartan_live</p>
+                </div>
+              </div>
+              <p class="text-zinc-300 text-sm mt-4 leading-relaxed">
+                Raw acoustic sessions, jam room aesthetics, behind-the-scenes brotherhood chemistry, and explosive gig drop reels that hype upcoming college and city tours.
+              </p>
+              <div class="flex flex-wrap gap-2 mt-4">
+                <span class="text-[11px] px-2.5 py-1 rounded-md bg-zinc-800 text-zinc-300 border border-brand-border">Band BTS</span>
+                <span class="text-[11px] px-2.5 py-1 rounded-md bg-zinc-800 text-zinc-300 border border-brand-border">Tour Drops</span>
+                <span class="text-[11px] px-2.5 py-1 rounded-md bg-zinc-800 text-zinc-300 border border-brand-border">Drum &amp; Guitar Solos</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-7 pt-0">
+            <a href="https://www.instagram.com/aavartan_live?mdxt=bmN2a3lmM2xtYTV6" target="_blank" rel="noopener noreferrer" class="w-full py-3 px-5 rounded-xl bg-brand-red hover:bg-brand-lightRed text-white font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 shadow-md shadow-brand-red/30">
+              <i class="fa-brands fa-instagram text-base"></i>
+              <span>View Aavartan on Instagram</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Pricing / Retainer Packages Section -->
+  <section id="packages" class="py-24 bg-brand-dark/40 border-t border-brand-border/70 relative">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8">
+      
+      <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+        <span class="text-xs uppercase font-bold tracking-widest text-brand-lightRed">Transparent Retainers</span>
+        <h2 class="font-display font-bold text-3xl sm:text-4xl text-white">Consistent Monthly Growth</h2>
+        <p class="text-zinc-400 text-sm sm:text-base">Predictable, high-impact content packages engineered to drive recurring engagement and physical walk-ins.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        
+        <!-- Tier 1: Starter Pack -->
+        <div class="bg-brand-card border border-brand-border rounded-2xl p-8 flex flex-col justify-between transition-all duration-300 hover:border-zinc-500">
+          <div>
+            <div class="flex justify-between items-center mb-4">
+              <span class="px-3 py-1 rounded-full bg-zinc-800 text-zinc-300 text-xs font-bold tracking-wide uppercase">Essential Presence</span>
+              <span class="text-xs text-zinc-400">Monthly Rolling</span>
+            </div>
+            
+            <h3 class="font-display font-bold text-2xl text-white mb-2">Starter Pack</h3>
+            <p class="text-zinc-400 text-sm mb-6">Designed for cafes and businesses starting their visual Instagram transformation.</p>
+            
+            <div class="mb-8 p-4 rounded-xl bg-zinc-900/80 border border-brand-border/80">
+              <span class="text-3xl font-display font-extrabold text-white">₹4,000 – ₹6,000</span>
+              <span class="text-zinc-400 text-xs block mt-1">/ month based on shoot frequency</span>
+            </div>
+
+            <ul class="space-y-3 text-sm text-zinc-300 mb-8">
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-circle-check text-brand-lightRed"></i>
+                <span><strong>4 High-Retention Reels</strong> / Month</span>
+              </li>
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-circle-check text-brand-lightRed"></i>
+                <span><strong>5 Strategic Feed Posts</strong> / Month</span>
+              </li>
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-circle-check text-brand-lightRed"></i>
+                <span>Dedicated On-Site Shoot Session</span>
+              </li>
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-circle-check text-brand-lightRed"></i>
+                <span>Full Editing &amp; Custom Colour Grading</span>
+              </li>
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-circle-check text-brand-lightRed"></i>
+                <span>Audio Foley &amp; Trending Sound Sync</span>
+              </li>
+            </ul>
+          </div>
+
+          <a href="#contact" class="w-full py-3.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-sm transition-all duration-300 text-center block">
+            Select Starter Plan
+          </a>
+        </div>
+
+        <!-- Tier 2: Premium Pack (Highlighted) -->
+        <div class="bg-gradient-to-b from-[#1c1214] to-brand-card border-2 border-brand-red rounded-2xl p-8 flex flex-col justify-between relative glow-red-box">
+          <div class="absolute -top-3.5 right-6 px-3.5 py-1 rounded-full bg-brand-red text-white text-xs font-bold tracking-wider uppercase shadow-md shadow-brand-red/40">
+            Most Popular
+          </div>
+
+          <div>
+            <div class="flex justify-between items-center mb-4">
+              <span class="px-3 py-1 rounded-full bg-brand-red/20 text-brand-lightRed border border-brand-red/30 text-xs font-bold tracking-wide uppercase">All-Inclusive</span>
+              <span class="text-xs text-zinc-400">Monthly Retainer</span>
+            </div>
+            
+            <h3 class="font-display font-bold text-2xl text-white mb-2">Premium Pack</h3>
+            <p class="text-zinc-300 text-sm mb-6">Full-scale digital takeover for established cafes, hotels, and nightlife spots.</p>
+            
+            <div class="mb-8 p-4 rounded-xl bg-brand-red/10 border border-brand-red/30">
+              <span class="text-3xl font-display font-extrabold text-brand-lightRed">₹8,000 – ₹10,000</span>
+              <span class="text-zinc-400 text-xs block mt-1">/ month complete management</span>
+            </div>
+
+            <ul class="space-y-3 text-sm text-zinc-200 mb-8">
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-circle-check text-brand-lightRed"></i>
+                <span><strong>6 Cinematic Reels</strong> / Month</span>
+              </li>
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-circle-check text-brand-lightRed"></i>
+                <span><strong>7 Professional Posts &amp; Graphics</strong></span>
+              </li>
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-circle-check text-brand-lightRed"></i>
+                <span>Weekly Interactive Story Sequences</span>
+              </li>
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-circle-check text-brand-lightRed"></i>
+                <span><strong>Complete Instagram Page Management</strong></span>
+              </li>
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-circle-check text-brand-lightRed"></i>
+                <span>Captions, Hashtags &amp; Content Calendar</span>
+              </li>
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-circle-check text-brand-lightRed"></i>
+                <span>Priority 48-Hour Video Turnaround</span>
+              </li>
+            </ul>
+          </div>
+
+          <a href="#contact" class="w-full py-3.5 rounded-xl bg-brand-red hover:bg-brand-lightRed text-white font-bold text-sm transition-all duration-300 text-center block shadow-lg shadow-brand-red/40 hover:-translate-y-0.5">
+            Book Premium Package
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Contact & Direct Collaboration Section -->
+  <section id="contact" class="py-24 border-t border-brand-border/70 relative">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        
+        <!-- Contact Information -->
+        <div class="lg:col-span-5 space-y-8">
+          <div>
+            <span class="text-xs uppercase font-bold tracking-widest text-brand-lightRed">Direct Access</span>
+            <h2 class="font-display font-bold text-3xl sm:text-4xl text-white mt-1">
+              LET'S MAKE YOUR BRAND <span class="text-brand-lightRed">IMPOSSIBLE TO IGNORE.</span>
+            </h2>
+            <p class="text-zinc-400 text-sm sm:text-base mt-4 leading-relaxed">
+              Have a cafe, restaurant, hotel, band, or upcoming event? Contact Joy and Goutam directly via WhatsApp or phone call to discuss your creative shoot.
+            </p>
+          </div>
+
+          <!-- Team Direct Buttons -->
+          <div class="space-y-4">
+            
+            <!-- Joy Contact Card -->
+            <div class="p-5 rounded-2xl bg-brand-card border border-brand-border flex items-center justify-between">
+              <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-full bg-brand-red/20 text-brand-lightRed flex items-center justify-center font-bold text-lg">
+                  J
+                </div>
+                <div>
+                  <h4 class="font-display font-bold text-white text-base">Joy</h4>
+                  <p class="text-xs text-zinc-400">+91 7470836604</p>
+                </div>
+              </div>
+              <div class="flex gap-2">
+                <a href="tel:+917470836604" class="w-10 h-10 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white flex items-center justify-center transition-colors" title="Call Joy">
+                  <i class="fa-solid fa-phone text-sm"></i>
+                </a>
+                <a href="https://wa.me/917470836604?text=Hi%20Joy,%20I'm%20interested%20in%20a%20reel%20shoot%20package%20with%20Shoot%20and%20Cut." target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-xl bg-green-900/60 hover:bg-green-600 text-green-300 hover:text-white flex items-center justify-center transition-colors" title="WhatsApp Joy">
+                  <i class="fa-brands fa-whatsapp text-lg"></i>
+                </a>
+              </div>
+            </div>
+
+            <!-- Goutam Contact Card -->
+            <div class="p-5 rounded-2xl bg-brand-card border border-brand-border flex items-center justify-between">
+              <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-full bg-brand-red/20 text-brand-lightRed flex items-center justify-center font-bold text-lg">
+                  G
+                </div>
+                <div>
+                  <h4 class="font-display font-bold text-white text-base">Goutam</h4>
+                  <p class="text-xs text-zinc-400">+91 7024578328</p>
+                </div>
+              </div>
+              <div class="flex gap-2">
+                <a href="tel:+917024578328" class="w-10 h-10 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white flex items-center justify-center transition-colors" title="Call Goutam">
+                  <i class="fa-solid fa-phone text-sm"></i>
+                </a>
+                <a href="https://wa.me/917024578328?text=Hi%20Goutam,%20I'm%20interested%20in%20a%20reel%20shoot%20package%20with%20Shoot%20and%20Cut." target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-xl bg-green-900/60 hover:bg-green-600 text-green-300 hover:text-white flex items-center justify-center transition-colors" title="WhatsApp Goutam">
+                  <i class="fa-brands fa-whatsapp text-lg"></i>
+                </a>
+              </div>
+            </div>
+
+            <!-- Email Card -->
+            <a href="mailto:shootcut25@gmail.com" class="p-5 rounded-2xl bg-brand-card border border-brand-border flex items-center justify-between hover:border-brand-red transition-all group">
+              <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-full bg-zinc-800 text-zinc-200 flex items-center justify-center text-lg group-hover:bg-brand-red group-hover:text-white transition-colors">
+                  <i class="fa-solid fa-envelope"></i>
+                </div>
+                <div>
+                  <h4 class="font-display font-bold text-white text-base">Agency Email</h4>
+                  <p class="text-xs text-zinc-400">shootcut25@gmail.com</p>
+                </div>
+              </div>
+              <i class="fa-solid fa-arrow-up-right-from-square text-zinc-500 group-hover:text-brand-lightRed transition-colors"></i>
+            </a>
+
+          </div>
+        </div>
+
+        <!-- Interactive Quick Inquiry Form -->
+        <div class="lg:col-span-7">
+          <div class="p-8 sm:p-10 rounded-2xl bg-brand-card border border-brand-border relative">
+            <h3 class="font-display font-bold text-2xl text-white mb-2">Book a Shoot Consultation</h3>
+            <p class="text-zinc-400 text-sm mb-8">Send us your project scope and we will respond within 4 hours.</p>
+
+            <form id="inquiryForm" class="space-y-5">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label class="block text-xs font-semibold text-zinc-300 mb-2 uppercase tracking-wider">Your Name / Brand</label>
+                  <input type="text" id="formName" required placeholder="e.g. Cafe Botanica" class="w-full px-4 py-3 rounded-xl bg-zinc-900 border border-brand-border text-white text-sm focus:outline-none focus:border-brand-red transition-colors">
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-zinc-300 mb-2 uppercase tracking-wider">Phone / WhatsApp</label>
+                  <input type="tel" id="formPhone" required placeholder="e.g. +91 9876543210" class="w-full px-4 py-3 rounded-xl bg-zinc-900 border border-brand-border text-white text-sm focus:outline-none focus:border-brand-red transition-colors">
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label class="block text-xs font-semibold text-zinc-300 mb-2 uppercase tracking-wider">Industry Type</label>
+                  <select id="formCategory" class="w-full px-4 py-3 rounded-xl bg-zinc-900 border border-brand-border text-white text-sm focus:outline-none focus:border-brand-red transition-colors">
+                    <option value="Cafe or Restaurant">Cafe / Restaurant</option>
+                    <option value="Hotel or Resort">Hotel / Luxury Resort</option>
+                    <option value="Live Music or Band">Band / Live Musician</option>
+                    <option value="Event Coverage">Event / Gig Coverage</option>
+                    <option value="Other">Other Lifestyle Brand</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-zinc-300 mb-2 uppercase tracking-wider">Preferred Package</label>
+                  <select id="formPackage" class="w-full px-4 py-3 rounded-xl bg-zinc-900 border border-brand-border text-white text-sm focus:outline-none focus:border-brand-red transition-colors">
+                    <option value="Starter Pack (₹4k-6k)">Starter Pack (₹4,000–6,000)</option>
+                    <option value="Premium Pack (₹8k-10k)" selected>Premium Pack (₹8,000–10,000)</option>
+                    <option value="Custom Event Shoot">Custom One-Off Shoot</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-semibold text-zinc-300 mb-2 uppercase tracking-wider">Project Details / Goals</label>
+                <textarea id="formMessage" rows="3" placeholder="Tell us about your space, menu specialties, upcoming event date, or desired aesthetic..." class="w-full px-4 py-3 rounded-xl bg-zinc-900 border border-brand-border text-white text-sm focus:outline-none focus:border-brand-red transition-colors"></textarea>
+              </div>
+
+              <button type="submit" class="w-full py-4 rounded-xl bg-brand-red hover:bg-brand-lightRed text-white font-bold text-sm tracking-wide transition-all duration-300 shadow-lg shadow-brand-red/30 flex items-center justify-center gap-2">
+                <i class="fa-brands fa-whatsapp text-lg"></i>
+                <span>Send Direct Inquiry to WhatsApp</span>
+              </button>
+
+              <div id="formFeedback" class="hidden p-3.5 rounded-xl bg-zinc-900 border border-brand-red/40 text-brand-lightRed text-xs text-center font-medium"></div>
+            </form>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-12 bg-brand-black border-t border-brand-border">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+      
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded bg-brand-red flex items-center justify-center text-white text-sm font-bold">
+          <i class="fa-solid fa-clapperboard"></i>
+        </div>
+        <span class="font-display font-bold text-lg text-white">
+          SHOOT <span class="text-brand-lightRed">&amp;</span> CUT
+        </span>
+      </div>
+
+      <div class="flex flex-wrap justify-center gap-6 text-xs text-zinc-400 font-medium">
+        <a href="#services" class="hover:text-white transition-colors">Services</a>
+        <a href="#portfolio" class="hover:text-white transition-colors">Hospitality</a>
+        <a href="#music" class="hover:text-white transition-colors">Music &amp; Live</a>
+        <a href="#packages" class="hover:text-white transition-colors">Packages</a>
+        <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+      </div>
+
+      <p class="text-xs text-zinc-400 text-center md:text-right">
+        &copy; 2026 Shoot and Cut Studio. All Rights Reserved.
+      </p>
+
+    </div>
+  </footer>
+
+  <!-- Script for Mobile Drawer and WhatsApp Submission -->
+  <script>
+    // Mobile Drawer Toggle
+    const mobileBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+
+    mobileBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+      });
+    });
+
+    // Interactive Form Routing to WhatsApp
+    const form = document.getElementById('inquiryForm');
+    const feedback = document.getElementById('formFeedback');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const name = document.getElementById('formName').value;
+      const phone = document.getElementById('formPhone').value;
+      const category = document.getElementById('formCategory').value;
+      const packageSelected = document.getElementById('formPackage').value;
+      const message = document.getElementById('formMessage').value;
+
+      const whatsappText = `Hello Shoot and Cut Team!%0A%0A*New Inquiry:*%0A- *Client:* ${encodeURIComponent(name)}%0A- *Phone:* ${encodeURIComponent(phone)}%0A- *Category:* ${encodeURIComponent(category)}%0A- *Package:* ${encodeURIComponent(packageSelected)}%0A- *Note:* ${encodeURIComponent(message || 'N/A')}`;
+
+      feedback.classList.remove('hidden');
+      feedback.textContent = "Redirecting to WhatsApp to start your project chat...";
+
+      setTimeout(() => {
+        // Direct to Joy's WhatsApp with filled payload
+        window.open(`https://wa.me/917470836604?text=${whatsappText}`, '_blank');
+      }, 700);
+    });
+  </script>
+</body>
+</html>
